@@ -1,2 +1,2 @@
-# comp150-robotics
+# comp150-Robotics
 COMP150 robotics project
