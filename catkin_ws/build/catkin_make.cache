@@ -1,0 +1,2 @@
+pathify
+-DCATKIN_DEVEL_PREFIX=/home/jyoon10/gitrepo/comp150-robotics/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/jyoon10/gitrepo/comp150-robotics/catkin_ws/install -G Unix Makefiles
