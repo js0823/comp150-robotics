@@ -11,7 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  gazebo_ros
 )
+
+find_package(gazebo REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -107,6 +110,10 @@ catkin_package(
 #  LIBRARIES pathify
 #  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
+  DEPENDS gazebo_ros
+  CATKIN_DEPENDS
+  INCLUDE_DIRS
+  LIBRARIES
 )
 
 ###########
@@ -116,11 +123,14 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
+  include
+    ${catkin_INCLUDE_DIRS}
+    ${GAZEBO_INCLUDE_DIRS}
+    ${SDFORMAT_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
+## Build what we code here: TODO
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/pathify.cpp
 # )

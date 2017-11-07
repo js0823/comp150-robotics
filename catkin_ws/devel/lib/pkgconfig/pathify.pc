@@ -5,4 +5,4 @@ Description: Description of pathify
 Version: 0.0.0
 Cflags: 
 Libs: -L/home/jyoon10/gitrepo/comp150-robotics/catkin_ws/devel/lib 
-Requires: 
+Requires: gazebo_ros
