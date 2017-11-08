@@ -31,5 +31,6 @@
 *.out
 *.app
 
-# Ignore build directory
+# Ignore build and devel directory
 /build/*
+/devel/*
