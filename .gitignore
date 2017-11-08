@@ -34,3 +34,4 @@
 # Ignore build and devel directory
 /build/*
 /devel/*
+/gazebo_ros_pkgs/*
