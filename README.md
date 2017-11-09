@@ -29,7 +29,6 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo".
 
 # TODO List
-- Learn how to use ROS and gazebo.
 - Create simple map using gazebo build editor(Or download one). I think we should create one by our own as example maps are very sophisticated for testing our basic functions.
 - Decorate the map with objects and colors.
 - Create a robot(we will use turtlebot)
@@ -46,3 +45,4 @@ JONG
 - I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now. One way I found to run gazebo on ubuntu vmware is by adding this to the line
     "export export SVGA_VGPU10=0"
 - Only when I updated gazebo to 7.8.1, the willow garage world and other stuffs started working.
+- According to readings, gazebo sometimes runs into segmentation fault because there is no nvidia graphics card. In that case, just keep launching until it works.
