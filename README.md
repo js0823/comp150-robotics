@@ -28,6 +28,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 10. If all goes well, test it using real robot.
 
 # Current issues
+JONG
 - I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now.
 - To get the maps, you need to build gazebo by doing the following commands.
     1. sudo apt-get install -y libgazebo7-dev
