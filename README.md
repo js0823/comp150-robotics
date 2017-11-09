@@ -12,7 +12,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 3. Type "catkin_make". This basically calls build commands via cmake and will build everything on the catkin_ws directory.
 4. Source setup.sh inside devel directory. I suggest adding it to bashrc.
 5. On bashrc, you should now have two lines, one sourcing /opt/ros/kinetic/setup.bash for ROS, and devel/setup.sh for our workspace directory.
-6. Install gazebo_src_pkgs by following http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros. This will allow integration with ROS(I think).
+6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo". If this doesn't work. let me know. One problem
 
 # TODO List
 1. Learn how to use ROS and gazebo.
@@ -29,13 +29,5 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 
 # Current issues
 JONG
-- I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now.
-- To get the maps, you need to build gazebo by doing the following commands.
-    1. sudo apt-get install -y libgazebo7-dev
-    2. cd [git-repo]/catkin_ws/src
-    3. git clone https://github.com/ros-simulation/gazebo_ros_pkgs.git -b kinetic-devel
-    4. rosdep update
-    5. rosdep check --from-paths . --ignore-src --rosdistro kinetic
-    6. cd [git-repo]/catkin_ws/
-    7. catkin_make
-    8. This builds gazebo, and has some worlds that is already built in. Willowgarage world looks good.
+- I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now. One way I found to run gazebo on ubuntu vmware is by adding this to the line
+    "export export SVGA_VGPU10=0"
