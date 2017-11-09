@@ -13,8 +13,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
     - gazebo --version (should return 7.8.1)
 4. After that, I had to reboot for unknown reason for gazebo to open.
 5. Run this to install turtlebot(or turtlebot3? I haven't tried this one. Not sure what the difference is)
-    - sudo apt-get install linux-headers-generic
     - sudo apt-get update
+    - sudo apt-get install linux-headers-generic
     - sudo apt-get install ros-kinetic-librealsense
     - sudo apt-get install ros-kinetic-turtlebot
     - sudo apt-get install ros-kinetic-turtlebot-gazebo
