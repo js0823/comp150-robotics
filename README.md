@@ -5,6 +5,13 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 # Guide to installing ROS and Gazebo(on Ubuntu VMware)
 1. Follow http://wiki.ros.org/kinetic/Installation/Ubuntu. Do desktop full install.
 2. In general, doing full install for ROS also installs gazebo. If you want more info on gazebo installation, read this http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros.
+3. Default gazebo version on ROS is 7.0.0. The latest gazebo version is 8, but we want to use the latest version of 7 just in case 8 breaks. Latest gazebo7 version is 7.8.1. To install gazebo 7.8.1, do the following.
+    -   sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+    - cat /etc/apt/sources.list.d/gazebo-stable.list
+    - sudo apt-get update
+    - sudo apt-get install gazebo7
+    - gazebo --version (should return 7.8.1)
+4. After that, I had to reboot for unknown reason for gazebo to open.
 
 # Starting for the first time
 1. Pull this repository.
@@ -31,3 +38,4 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 JONG
 - I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now. One way I found to run gazebo on ubuntu vmware is by adding this to the line
     "export export SVGA_VGPU10=0"
+- Only when I updated gazebo to 7.8.1, the willow garage world and other stuffs started working.
