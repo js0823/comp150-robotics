@@ -32,6 +32,6 @@
 *.app
 
 # Ignore build and devel directory
-/build/*
-/devel/*
-/gazebo_ros_pkgs/*
+catkin_ws/build/*
+catkin_ws/devel/*
+catkin_ws/gazebo_ros_pkgs/*
