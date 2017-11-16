@@ -26,6 +26,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 4. Source setup.sh inside devel directory. I suggest adding it to bashrc.
 5. On bashrc, you should now have two lines, one sourcing /opt/ros/kinetic/setup.bash for ROS, and devel/setup.sh for our workspace directory.
 6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo".
+7. set "export TURTLEBOT_3D_SENSOR=kinect". Put this into your bashrc.
 
 # TODO List
 ## Creating a world
