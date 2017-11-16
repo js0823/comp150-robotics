@@ -36,8 +36,9 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
     - terminal 2 = 'roslaunch turtlebot_teleop keyboard_teleop.launch'
     - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_robot.launch' to see what turtlebot sees or
     - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_navigation.launch' to see map building.
-    - terminal 4 = 'roslaunch turtlebot_gazebo gmapping_demo.launch' to use gmapping to build the map.
 - Integrate computer vision and let the robot navigate around the map and build topological map from it.
+    - terminal 4 = 'roslaunch turtlebot_gazebo gmapping_demo.launch' to use gmapping to build the map.
+    - We can use frontier exploration to build map autonomously.
 - Integrate nodes and edges for pathfinding algorithm.
 - Make the robot look for the object around the map and stop when found.
 - Robot needs to go back to home base and recalculate the path to the object via pathfinding algorithm.
