@@ -32,6 +32,11 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - Decorate the map with objects and colors.
 - Create a robot(we will use turtlebot)
 - Get the robot to navigate around the map using keyboard first.
+    - terminal 1 = 'roslaunch turtlebot_gazebo turtlebot_world.launch' or 'roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds/willowgarage.world'     
+    - terminal 2 = 'roslaunch turtlebot_teleop keyboard_teleop.launch'
+    - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_robot.launch' to see what turtlebot sees or
+    - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_navigation.launch' to see map building.
+    - terminal 4 = 'roslaunch turtlebot_gazebo gmapping_demo.launch' to use gmapping to build the map.
 - Integrate computer vision and let the robot navigate around the map and build topological map from it.
 - Integrate nodes and edges for pathfinding algorithm.
 - Make the robot look for the object around the map and stop when found.
