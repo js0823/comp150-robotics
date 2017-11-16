@@ -28,22 +28,31 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo".
 
 # TODO List
-- Create simple map using gazebo build editor(Or download one). I think we should create one by our own as example maps are very sophisticated for testing our basic functions.
-- Decorate the map with objects and colors.
-- Create a robot(we will use turtlebot)
-- Get the robot to navigate around the map using keyboard first.
+## Creating a world
+- We can create a world using gazebo build editor from the gazebo GUI.
+- Decorate the map with objects and colors for the turtlebot to see.
+
+## Using turtlebot to navigate and build a map of the world
+- Getting the robot to navigate around the map using keyboard.
     - terminal 1 = 'roslaunch turtlebot_gazebo turtlebot_world.launch' or 'roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds/willowgarage.world'     
     - terminal 2 = 'roslaunch turtlebot_teleop keyboard_teleop.launch'
     - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_robot.launch' to see what turtlebot sees or
     - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_navigation.launch' to see map building.
 - Integrate computer vision and let the robot navigate around the map and build topological map from it.
     - terminal 4 = 'roslaunch turtlebot_gazebo gmapping_demo.launch' to use gmapping to build the map.
-    - We can use frontier exploration to build map autonomously.
-- Integrate nodes and edges for pathfinding algorithm.
+
+## Integrating node and edges in order to calculate shortest path
+- We can use frontier exploration to build map autonomously, but we will also need to edit this package in order to create nodes and edges while exploring autonomously.
+- We will be using A* algorithm.
+
+## Using computer vision to find the object
 - Make the robot look for the object around the map and stop when found.
 - Robot needs to go back to home base and recalculate the path to the object via pathfinding algorithm.
 - Once above is done, do it for multiple objects.
 - If all goes well, test it using real robot.
+
+## Issuing commands to turtlebot
+- By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
 
 # Current issues
 JONG
