@@ -54,6 +54,13 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
 
+# Good tutorials
+- Turtlebot and gazebo tutorial http://learn.turtlebot.com/2015/02/03/1/
+- Frontier exploration http://wiki.ros.org/frontier_exploration
+- Gmapping http://wiki.ros.org/turtlebot_gazebo/Tutorials/indigo/Make%20a%20map%20and%20navigate%20with%20it
+- SLAM map building http://wiki.ros.org/turtlebot_navigation/Tutorials/indigo/Build%20a%20map%20with%20SLAM
+- Another building map tutorial http://wiki.ros.org/turtlebot_simulator/Tutorials/fuerte/Building%20a%20Map%20in%20TurtleBot%20Simulator
+
 # Current issues
 JONG
 - I can't get gazebo to run properly on my Mac's vmware running ubuntu. I am working with my desktop now. One way I found to run gazebo on ubuntu vmware is by adding this to the line
