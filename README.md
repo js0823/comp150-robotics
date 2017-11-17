@@ -15,8 +15,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 5. Run this to install turtlebot(or turtlebot3? I haven't tried this one. Not sure what the difference is)
     - sudo apt-get update
     - sudo apt-get install linux-headers-generic
-    - sudo apt-get install ros-kinetic-librealsense
-    - sudo apt-get install ros-kinetic-turtlebot
+    - sudo apt-get install ros-kinetic-turtlebot*
     - sudo apt-get install ros-kinetic-turtlebot-gazebo
     - Try "roslaunch turtlebot_gazebo turtlebot_world.launch"
 
@@ -27,18 +26,41 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 4. Source setup.sh inside devel directory. I suggest adding it to bashrc.
 5. On bashrc, you should now have two lines, one sourcing /opt/ros/kinetic/setup.bash for ROS, and devel/setup.sh for our workspace directory.
 6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo".
+7. set "export TURTLEBOT_3D_SENSOR=kinect". Put this into your bashrc.
 
 # TODO List
-- Create simple map using gazebo build editor(Or download one). I think we should create one by our own as example maps are very sophisticated for testing our basic functions.
-- Decorate the map with objects and colors.
-- Create a robot(we will use turtlebot)
-- Get the robot to navigate around the map using keyboard first.
+## Creating a world
+- We can create a world using gazebo build editor from the gazebo GUI.
+- Decorate the map with objects and colors for the turtlebot to see.
+
+## Using turtlebot to navigate and build a map of the world
+- Getting the robot to navigate around the map using keyboard.
+    - terminal 1 = 'roslaunch turtlebot_gazebo turtlebot_world.launch' or 'roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds/willowgarage.world'     
+    - terminal 2 = 'roslaunch turtlebot_teleop keyboard_teleop.launch'
+    - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_robot.launch' to see what turtlebot sees or
+    - terminal 3 = 'roslaunch turtlebot_rviz_launchers view_navigation.launch' to see map building.
 - Integrate computer vision and let the robot navigate around the map and build topological map from it.
-- Integrate nodes and edges for pathfinding algorithm.
+    - terminal 4 = 'roslaunch turtlebot_gazebo gmapping_demo.launch' to use gmapping to build the map.
+
+## Integrating node and edges in order to calculate shortest path
+- We can use frontier exploration to build map autonomously, but we will also need to edit this package in order to create nodes and edges while exploring autonomously.
+- We will be using A* algorithm.
+
+## Using computer vision to find the object
 - Make the robot look for the object around the map and stop when found.
 - Robot needs to go back to home base and recalculate the path to the object via pathfinding algorithm.
 - Once above is done, do it for multiple objects.
 - If all goes well, test it using real robot.
+
+## Issuing commands to turtlebot
+- By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
+
+# Good tutorials
+- Turtlebot and gazebo tutorial http://learn.turtlebot.com/2015/02/03/1/
+- Frontier exploration http://wiki.ros.org/frontier_exploration
+- Gmapping http://wiki.ros.org/turtlebot_gazebo/Tutorials/indigo/Make%20a%20map%20and%20navigate%20with%20it
+- SLAM map building http://wiki.ros.org/turtlebot_navigation/Tutorials/indigo/Build%20a%20map%20with%20SLAM
+- Another building map tutorial http://wiki.ros.org/turtlebot_simulator/Tutorials/fuerte/Building%20a%20Map%20in%20TurtleBot%20Simulator
 
 # Current issues
 JONG
