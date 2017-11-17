@@ -32,6 +32,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 ## Creating a world
 - We can create a world using gazebo build editor from the gazebo GUI.
 - Decorate the map with objects and colors for the turtlebot to see.
+- I created a world and saved it to Pathify directory. It's a simple map containing just walls. It would be nice to decorate it, and we need some colors and objects in it.
 
 ## Using turtlebot to navigate and build a map of the world
 - Getting the robot to navigate around the map using keyboard.
