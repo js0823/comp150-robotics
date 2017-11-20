@@ -54,7 +54,6 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - If all goes well, test it using real robot.
 - OpenCV install guide - http://www.codebind.com/cpp-tutorial/install-opencv-ubuntu-cpp/
     - Try to install using everything just in case. For example, tbb, qt, jpeg, tiff, png, examples, opengl, python3, etc.
-    - Change install prefix to /opt/opencv/3.3.1
 
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
