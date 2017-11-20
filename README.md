@@ -52,6 +52,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - Robot needs to go back to home base and recalculate the path to the object via pathfinding algorithm.
 - Once above is done, do it for multiple objects.
 - If all goes well, test it using real robot.
+- OpenCV install guide - http://www.codebind.com/cpp-tutorial/install-opencv-ubuntu-cpp/
+    - Try to install using everything just in case. For example, tbb, qt, jpeg, tiff, png, examples, opengl, python3, etc.
 
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
