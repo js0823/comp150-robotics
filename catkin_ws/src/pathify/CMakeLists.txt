@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   gazebo_ros
   sensor_msgs
+  cv_bridge
 )
 
 find_package(gazebo REQUIRED)
