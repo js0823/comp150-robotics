@@ -60,8 +60,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
     - To use it, do
         - Make sure the code is compiled.
         - In one terminal, type "roscore"
-        - Type "ROBOT_INITIAL_POSE="-x -8.982751 -y -2.989552 -z 0" "
-        - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds//home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMap1/map1.world"
+        - Type "export ROBOT_INITIAL_POSE="-x -8.982751 -y -2.989552 -z 0" "
+        - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=/home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMaps/map1.world"
         - In another terminal, type "roslaunch turtlebot_teleop keyboard_teleop.launch"
         - In another terminal, type "rosrun pathify image_detector"
 
