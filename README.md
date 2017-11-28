@@ -64,6 +64,10 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
         - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=/home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMaps/map1.world"
         - In another terminal, type "roslaunch turtlebot_teleop keyboard_teleop.launch"
         - In another terminal, type "rosrun pathify image_detector"
+- Grey wall on gazebo RGB value is 116,116,116
+- Red wall RGB = 203~204, 105, 105
+- Blue wall RGB = 
+- Yellow wall RGB = 
 
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
