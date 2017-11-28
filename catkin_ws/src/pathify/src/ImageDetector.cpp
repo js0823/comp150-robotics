@@ -43,9 +43,9 @@ class ImageDetector
             return;
         }
 
-        cv::Mat img_mask, img_hsv;
-        cv::cvtColor(cv_ptr->image, img_hsv, CV_BGR2HSV);
-        cv::inRange(img_hsv,cv::Scalar(LowerH,LowerS,LowerV),cv::Scalar(UpperH,UpperS,UpperV),img_mask); 
+        //cv::Mat img_mask, img_hsv;
+        //cv::cvtColor(cv_ptr->image, img_hsv, CV_BGR2HSV);
+        //cv::inRange(img_hsv,cv::Scalar(LowerH,LowerS,LowerV),cv::Scalar(UpperH,UpperS,UpperV),img_mask); 
 
         // Draw an example circle on the video stream
         // if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60) {
