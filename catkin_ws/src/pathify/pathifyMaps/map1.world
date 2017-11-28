@@ -80,12 +80,12 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <state world_name='default'>
-      <sim_time>8 665000000</sim_time>
-      <real_time>8 693084206</real_time>
-      <wall_time>1510897260 923730800</wall_time>
-      <iterations>8665</iterations>
+      <sim_time>28 618000000</sim_time>
+      <real_time>20 9960619</real_time>
+      <wall_time>1511857053 859365798</wall_time>
+      <iterations>19953</iterations>
       <model name='PathifyMap1'>
-        <pose frame=''>-0.083684 -0.647717 0 0 -0 0</pose>
+        <pose frame=''>-0.08368 -0.64772 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='Wall_100'>
           <pose frame=''>7.12351 3.24304 0 0 -0 3.14159</pose>
@@ -3058,7 +3058,7 @@
     </model>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>9.95282 -32.2097 63.8264 -0 1.10364 1.6882</pose>
+        <pose frame=''>7.3109 -16.726 32.7556 -0 1.10364 1.6882</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
