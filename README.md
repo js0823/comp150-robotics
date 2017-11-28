@@ -33,6 +33,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
     - Shows all topics currently running on roscore. This is useful when you want to get the output of another package and work on it, such a from turtlebot to your code.
 - rosnode list
     - Shows all nodes currently running on roscore. If you run this while running your package, your package should show up here.
+- catkin_make
+    - Compile all packages. Run this command on catkin_ws directory, and you will see everything gets built in it.
 
 # TODO List
 ## Creating a world
