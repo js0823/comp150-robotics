@@ -55,6 +55,13 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - OpenCV install guide - http://www.codebind.com/cpp-tutorial/install-opencv-ubuntu-cpp/
     - Try to install using everything just in case. For example, tbb, qt, jpeg, tiff, png, examples, opengl, python3, etc.
     - I installed on /opt/opencv/3.3.1 and set "export opencv3_DIR=/opt/opencv/3.3.1
+- ImageDetector.cpp is the openCV which will be the front camera as well as image detection.
+    - To use it, do
+        - Make sure the code is compiled.
+        - In one terminal, type "roscore"
+        - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds//home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/PathifyMap1/map1.world"
+        - In another terminal, type "roslaunch turtlebot_teleop keyboard_teleop.launch"
+        - In another terminal, type "rosrun pathify image_detector"
 
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
