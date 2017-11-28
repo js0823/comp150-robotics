@@ -28,6 +28,12 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 6. Try running "roscore", then on your other terminal "rosrun gazebo_ros gazebo".
 7. set "export TURTLEBOT_3D_SENSOR=kinect". Put this into your bashrc.
 
+# Some Good To Know Commands
+- rostopic list
+    - Shows all topics currently running on roscore. This is useful when you want to get the output of another package and work on it, such a from turtlebot to your code.
+- rosnode list
+    - Shows all nodes currently running on roscore. If you run this while running your package, your package should show up here.
+
 # TODO List
 ## Creating a world
 - We can create a world using gazebo build editor from the gazebo GUI.
