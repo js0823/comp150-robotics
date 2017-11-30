@@ -70,7 +70,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
         - Type "export ROBOT_INITIAL_POSE="-x -8.982751 -y -2.989552 -z 0" "
         - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=/home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMaps/map1.world" (roslaunch launches roscore automatically if roscore is not found running)
         - In another terminal, type "roslaunch turtlebot_teleop keyboard_teleop.launch"
-        - In another terminal, type "rosrun pathify image_detector"
+        - In another terminal, type "roslaunch pathify pathify.launch"
 - Grey wall on gazebo RGB value is 116,116,116
 - Red wall RGB = 203~204, 105, 105
 - Blue wall RGB = 

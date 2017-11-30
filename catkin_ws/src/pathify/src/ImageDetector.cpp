@@ -15,6 +15,7 @@ class ImageDetector
     ros::NodeHandle nh_;
     image_transport::ImageTransport it_;
     image_transport::Subscriber image_sub_;
+    image_transport::Subscriber image_sub_depth_;
     image_transport::Publisher image_pub_;
 
   public:
@@ -22,7 +23,10 @@ class ImageDetector
         : it_(nh_)
     {
         // Subscrive to input video feed and publish output video feed
-        image_sub_ = it_.subscribe("/camera/rgb/image_raw", 1, &ImageDetector::ColorDetectionCallBack, this);
+        image_sub_ = it_.subscribe("/camera/rgb/image_raw", 1, 
+            &ImageDetector::ColorDetectionCallBack, this);
+        image_sub_depth_ = it_.subscribe("/camera/depth/image_raw", 1, 
+            &ImageDetector::ColorDetectionCallBack, this);
         image_pub_ = it_.advertise("/image_detector/output_video", 1);
 
         cv::namedWindow(OPENCV_WINDOW);
@@ -36,6 +40,7 @@ class ImageDetector
     void ColorDetectionCallBack(const sensor_msgs::ImageConstPtr &msg)
     {
         cv_bridge::CvImagePtr cv_ptr;
+        cv_bridge::CvImagePtr depth_ptr;
         try
         {
             cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
