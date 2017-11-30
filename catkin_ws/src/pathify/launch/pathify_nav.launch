@@ -2,23 +2,25 @@
 
 	<!-- Some general parameters -->
 	<param name="use_sim_time" value="true" />
-	<rosparam file="$(find pathify)/param/ros.yaml"/>
+	<rosparam file="$(find pathify)/param/ros.yaml" />
+	<param name="/laser_frame" value="base_footprint" />
 
 	<!-- Start Stage simulator with a given environment -->
-	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find pathify)/world/nav2d_world/tutorial.world">
+	<!-- <node name="Stage" pkg="stage_ros" type="stageros" args="$(find pathify)/world/nav2d_world/tutorial.world">
 		<param name="base_watchdog_timeout" value="0" />
-	</node>
+	</node> -->
 
 	<!-- Start the Operator to control the simulated robot -->
 	<node name="Operator" pkg="nav2d_operator" type="operator" >
-		<remap from="scan" to="base_scan"/>
+		<!-- <remap from="scan" to="base_scan"/> -->
+		<remap from="cmd_vel" to="cmd_vel_mux/input/teleop" />
 		<rosparam file="$(find pathify)/param/operator.yaml"/>
 		<rosparam file="$(find pathify)/param/costmap.yaml" ns="local_map" />
 	</node>
 
-	<!-- Start Mapper to genreate map from laser scans -->
+	<!-- Start Mapper to genrate map from laser scans -->
 	<node name="Mapper" pkg="nav2d_karto" type="mapper">
-		<remap from="scan" to="base_scan"/>
+		<!-- <remap from="scan" to="base_scan"/> -->
 		<rosparam file="$(find pathify)/param/mapper.yaml"/>
 	</node>
 
@@ -31,9 +33,9 @@
 	<node name="Explore" pkg="nav2d_navigator" type="explore_client" />
 	<node name="SetGoal" pkg="nav2d_navigator" type="set_goal_client" />
 
-	<!-- Start the joystick-driver and remote-controller for operation-->
+	<!-- Start the joystick-driver and remote-controller for operation
 	<node name="Joystick" pkg="joy" type="joy_node" />
-	<node name="Remote" pkg="nav2d_remote" type="remote_joy" />
+	<node name="Remote" pkg="nav2d_remote" type="remote_joy" /> -->
 
 	<!-- RVIZ to view the visualization -->
 	<node name="RVIZ" pkg="rviz" type="rviz" args=" -d $(find pathify)/param/tutorial3.rviz" />
