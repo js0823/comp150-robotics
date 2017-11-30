@@ -1,6 +1,7 @@
 #include <vector>
 #include <sstream>
 #include <string>
+#include <fstream>
 
 struct Coordinate
     {
@@ -16,7 +17,7 @@ struct Item
     Coordinate location;
 };
 
-std::vector<Item> Items_On_Maze;
+std::vector<Item> Robot_RAM;
 
 /*output string format:
 Maze Name; Item Name; Item x-location; Item y-location; Item z-location */
@@ -26,11 +27,16 @@ std::string Item_Information;
 std::string maze_name;
 
 bool found_before(std::string item_name);
+float string_to_float(std::string str);
+std::string float_to_string(float flt);
+void add_item_to_file(std::string item);
 std::string parse_Item_To_string(Item item);
 Item parse_string_To_Item(std::string item_stringform);
 std::string change_to_lowercase(std::string str);
 void go_mode(std::string item_name);
 void find_mode(std::string item_name);
+void update_rom(const std::string& file_name, const std::string& content);
+void update_ram(const std::string& filen_name, const std::string& content);
 
 int main(int argc, char **argv)
 {
@@ -96,9 +102,9 @@ int main(int argc, char **argv)
 
 bool found_before(std::string item_name)
 { 
-    int size = (int) Items_On_Maze.size();
+    int size = (int) Robot_RAM.size();
     for(int i = 0; i< size; i++){
-        if(Items_On_Maze[i].item_name == item_name && Items_On_Maze[i].maze_name == maze_name)
+        if(Robot_RAM[i].item_name == item_name && Robot_RAM[i].maze_name == maze_name)
         {
             return true;
         }
@@ -110,10 +116,11 @@ bool found_before(std::string item_name)
 std::string parse_Item_To_string(Item item)
 {
     std::string fin;
-    fin = item.maze_name + ";"+ item.item_name + ";" + std::to_string(item.location.x)+ ";" + \
-                        std::to_string(item.location.y)+ ";" + std::to_string(item.location.z) + ".";
+    fin = item.maze_name + ";"+ item.item_name + ";" + float_to_string(item.location.x)+ ";" + \
+                    float_to_string(item.location.y)+ ";" + float_to_string(item.location.z) + ".";
     return fin;
 }
+
 
 std::vector<std::string> parse_helper(std::string str)
 {
@@ -139,13 +146,15 @@ std::vector<std::string> parse_helper(std::string str)
 Item parse_string_To_Item(std::string item_stringform)
 {
     Item tmp;
+    std::vector<std::string> items;
     Coordinate xyz;
-    tmp.maze_name = maze_name;
-    tmp.item_name = change_to_lowercase(item_name);
+    tmp.maze_name = items[0];
+    tmp.item_name = items[1];
+    
     /*recieve co-ordinate from robot*/
-    xyz.x =                                                 //get from timi
-    xyz.y =                                                 //get from timi
-    xyz.z =                                                 //get from timi
+    xyz.x =   0.0                                              //get from timi
+    xyz.y =     0.0                                            //get from timi
+    xyz.z =    0.0                                             //get from timi
     tmp.location = xyz;
 }
 
@@ -164,15 +173,15 @@ std::string change_to_lowercase(std::string str)
 
 void go_mode(std::string item_name)
 {
-    int size = (int) Items_On_Maze.size();
+    int size = (int) Robot_RAM.size();
     for(int i = 0; i< size; i++){
-        if(Items_On_Maze[i].item_name == item_name && Items_On_Maze[i].maze_name == maze_name)
+        if(Robot_RAM[i].item_name == item_name && Robot_RAM[i].maze_name == maze_name)
         {
             // 
             Coordinate xyz;
-            xyz.x = Items_On_Maze[i].location.x;     
-            xyz.y = Items_On_Maze[i].location.y;                                                 
-            xyz.z = Items_On_Maze[i].location.z;  
+            xyz.x = Robot_RAM[i].location.x;     
+            xyz.y = Robot_RAM[i].location.y;                                                 
+            xyz.z = Robot_RAM[i].location.z;  
             // send to timi
             
         }
@@ -188,14 +197,32 @@ void find_mode(std::string item_name)
     tmp.maze_name = maze_name;
     tmp.item_name = change_to_lowercase(item_name);
     /*recieve co-ordinate from robot*/
-    xyz.x =                             //get from timi
-    xyz.y =                             //get from timi
-    xyz.z =                             //get from timi
+    xyz.x =  0.0                           //get from timi
+    xyz.y =  0.0                           //get from timi
+    xyz.z =   0.0                          //get from timi
     tmp.location = xyz;
     if(/*valid location*/true)
     {
-        Items_On_Maze.push_back(tmp);
+        Robot_RAM.push_back(tmp);
     }
 }
 
 
+float string_to_float(std::string str)
+{
+    std::string::size_type sz;     // alias of size_t
+    float flt= std::stof (str,&sz);
+    return flt;
+}
+
+std::string float_to_string(float flt)
+{
+    return std::to_string(flt);
+}
+void update_rom(const std::string& file_name, const std::string& content)
+{
+    std::ofstream outfile;
+    outfile.open(file_name);
+    outfile<<content;
+    outfile.close();
+}
