@@ -67,9 +67,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - ImageDetector.cpp is the openCV which will be the front camera as well as image detection.
     - To use it, do
         - Make sure the code is compiled.
-        - In one terminal, type "roscore"
         - Type "export ROBOT_INITIAL_POSE="-x -8.982751 -y -2.989552 -z 0" "
-        - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=/home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMaps/map1.world"
+        - In another terminal, type "roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=/home/jyoon10/git-repo/comp150-robotics/catkin_ws/src/pathify/pathifyMaps/map1.world" (roslaunch launches roscore automatically if roscore is not foiund running)
         - In another terminal, type "roslaunch turtlebot_teleop keyboard_teleop.launch"
         - In another terminal, type "rosrun pathify image_detector"
 - Grey wall on gazebo RGB value is 116,116,116
