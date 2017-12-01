@@ -79,6 +79,13 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
 
+# Current Starting Guide (To run the project)
+- First make sure all packages are built by running command "catkin_make" on the catkin_ws directory.
+- Run command "roslaunch pathify pathify_turtlebot_gazebo.launch" in a terminal.
+- Run command "roslaunch pathify pathify_nav.launch" in another terminal.
+- Run command "roslaunch roslaunch pathify pathify_imageDetector.launch" in another terminal.
+- Try "rosservice call /StartExploration" or "rosservice call /StartMapping" to do autonomous navigation.
+
 # Good tutorials
 - Turtlebot and gazebo tutorial http://learn.turtlebot.com/2015/02/03/1/
 - Frontier exploration http://wiki.ros.org/frontier_exploration
