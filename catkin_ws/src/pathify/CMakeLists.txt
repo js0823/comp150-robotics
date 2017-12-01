@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1.0)
 project(pathify)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -233,3 +236,7 @@ add_dependencies(add_two_ints_client pathify_gencpp)
 add_executable(image_detector src/ImageDetector.cpp)
 target_link_libraries(image_detector ${catkin_LIBRARIES})
 add_dependencies(image_detector pathify_gencpp)
+
+add_executable(Input_Talker src/Input_Talker.cpp)
+target_link_libraries(Input_Talker ${catkin_LIBRARIES})
+add_dependencies(Input_Talker pathify_gencpp)
