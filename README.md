@@ -54,7 +54,8 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 ## Integrating node and edges in order to calculate shortest path
 - We can use frontier exploration to build map autonomously, but we will also need to edit this package in order to create nodes and edges while exploring autonomously.
 - We will be using A* algorithm.
-- Turtlebot Initial Pose in map1.world : x = -8.982751, y = -2.989552, z = 0.000817, roll = -0.000182, pitch = -0.020424, yaw = -0.000394 
+- Turtlebot Initial Pose in map1.world : x = -8.982751, y = -2.989552, z = 0, roll = -0.000182, pitch = -0.020424, yaw = -0.000394
+- Turtlebot Initial Pose in map2.world : x = -0.298748, y = -4.087023, z = 0, roll = 0.000766, pitch = -0.014433, yaw = -0.014433
 
 ## Using computer vision to find the object
 - Make the robot look for the object around the map and stop when found.
