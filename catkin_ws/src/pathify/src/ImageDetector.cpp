@@ -7,9 +7,10 @@
 
 static const std::string OPENCV_WINDOW = "Turtlebot Live";
 
-// Detect color Red
-int Lower_H = 0, Lower_S = 100, Lower_V = 100;
-int Upper_H = 10, Upper_S = 255, Upper_V = 255;
+// Detect all colors except walls.
+int Lower_H = 0, Lower_S = 1, Lower_V = 1;
+int Upper_H = 255, Upper_S = 255, Upper_V = 255;
+
 class ImageDetector {
     ros::NodeHandle nh_;
     image_transport::ImageTransport it_;
