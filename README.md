@@ -83,7 +83,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - First make sure all packages are built by running command "catkin_make" on the catkin_ws directory.
 - Run command "roslaunch pathify pathify_turtlebot_gazebo.launch" in a terminal.
 - Run command "roslaunch pathify pathify_nav.launch" in another terminal.
-- Run command "roslaunch roslaunch pathify_imageDetector.launch" in another terminal.
+- Run command "roslaunch pathify_imageDetector.launch" in another terminal.
 - Try "rosservice call /StartExploration" or "rosservice call /StartMapping" to do autonomous navigation.
     - "rosservice call /StartMapping" = This seems to look around to get the current position.
     - :rosservice call /StartExploration" = This will start exploring. Use StartMapping first.
