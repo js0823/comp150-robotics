@@ -5,7 +5,8 @@
 #include <fstream>
 #include <string.h>
 #include <ctype.h>
-
+#include "pathify/ReturnCoordinate.h"
+#include <cstdlib>
 
 struct Coordinate
     {
@@ -29,6 +30,7 @@ std::string Item_Information;
 
 /*provided by the current maze name*/
 std::string maze_name;
+ros::ServiceClient client;
 
 bool found_before(std::string item_name);
 bool is_empty(std::ifstream& pFile);
@@ -38,6 +40,7 @@ Item parse_string_To_Item(std::string item_stringform);
 std::string change_to_lowercase(std::string str);
 std::string float_to_string(float flt);
 std::vector<std::string> parse_input(std::string str);
+std::vector<std::string> parse_output_from_ros(std::string str);
 std::string parse_Item_To_string(Item item);
 
 void go_mode(std::string item_name);
@@ -52,6 +55,13 @@ int main(int argc, char **argv)
     bool end = false;
     update_ram("Robot_ROM.txt");
     maze_name = /*get from somewhere*/"love";
+    
+    ros::init(argc, argv, "Input_Talker");
+    ros::NodeHandle n;
+    client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
+    
+    
+    
     
     while(!end)
     {
@@ -177,29 +187,31 @@ void go_mode(std::string item_name)
 {
     /*look for and add to memory*/
     Item tmp;
-    Coordinate x_y_z;
     bool found = false;
     tmp.maze_name = maze_name;
     tmp.item_name = change_to_lowercase(item_name);
-    /*recieve co-ordinate from robot*/
+    pathify::ReturnCoordinate srv;
     
-    /*TODO: get fxyz from timi*/
-    x_y_z.x =  0.0;                           
-    x_y_z.y =  0.0;                          
-    x_y_z.z =   0.0;                          
-    tmp.location = x_y_z;
-    found = true;
-    
-    if(found)
+   if (client.call(srv))
     {
-        Robot_RAM.push_back(tmp);
-        std::string tmp_string = parse_Item_To_string(tmp);
-        update_rom("Robot_ROM.txt", tmp_string);
-        std::cout<<"Found"<<" "<< item_name<<"\n";
-        
+        /*recieve co-ordinate from robot*/
+        ROS_INFO("result: %s", srv.response.sum);
+        std::string result = srv.response.coord_xyz;
+        std::vector<std::string> tmp_result = parse_output_from_ros(result);
+        Coordinate x_y_z;
+        float size  = string_to_float(tmp_result[0]) + string_to_float(tmp_result[1]) + string_to_float(tmp_result[2]);
+        if(size!= 0.0)
+        {
+            x_y_z.x =  string_to_float(tmp_result[0]);                           
+            x_y_z.y =  string_to_float(tmp_result[1]);                          
+            x_y_z.z =  string_to_float(tmp_result[2]);                          
+            tmp.location = x_y_z;
+            Robot_RAM.push_back(tmp);
+            std::string tmp_string = parse_Item_To_string(tmp);
+            update_rom("Robot_ROM.txt", tmp_string);
+            std::cout<<"Found"<<" "<< item_name<<"\n";
+        }
     }
-    
-    
 }
 
 
@@ -273,6 +285,28 @@ std::vector<std::string> parse_helper(std::string str)
     return output; 
 }
 
+std::vector<std::string> parse_output_from_ros(std::string str)
+{
+    int size = str.length();
+    std::string a;
+    std::vector<std::string> output;
+    for(int i = 0; i<size; i++)
+    {
+        if (str[i] ==  ',' || str[i] ==  '.')
+        {
+            output.push_back(a);
+            a = "";
+        }
+        else
+        {
+            a += str[i];
+        }
+    }
+    
+    return output; 
+}
+
+
 Item parse_string_To_Item(std::string item_stringform)
 {
     Item tmp;
@@ -339,6 +373,7 @@ std::vector<std::string> parse_input(std::string str)
             a += str[i];
             
         }
+        
         else
         {  if(a!="")
             {
@@ -348,6 +383,7 @@ std::vector<std::string> parse_input(std::string str)
             
         }
     }
+    
     if(a!="")
     {
         output.push_back(a);
