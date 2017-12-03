@@ -373,6 +373,7 @@ std::vector<std::string> parse_input(std::string str)
             a += str[i];
             
         }
+        
         else
         {  if(a!="")
             {
@@ -382,6 +383,7 @@ std::vector<std::string> parse_input(std::string str)
             
         }
     }
+    
     if(a!="")
     {
         output.push_back(a);
