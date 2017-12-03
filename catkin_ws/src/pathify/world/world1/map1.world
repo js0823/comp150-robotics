@@ -84,7 +84,7 @@
       <real_time>20 9960619</real_time>
       <wall_time>1511857053 859365798</wall_time>
       <iterations>19953</iterations>
-      <model name='PathifyMap1'>
+      <model name='world1'>
         <pose frame=''>-0.08368 -0.64772 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='Wall_100'>
@@ -456,7 +456,7 @@
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
     </state>
-    <model name='PathifyMap1'>
+    <model name='world1'>
       <pose frame=''>-0.083684 -0.647717 0 0 -0 0</pose>
       <link name='Wall_100'>
         <collision name='Wall_100_Collision'>

@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-  <model name='PathifyMap1'>
+  <model name='map1'>
     <pose frame=''>-0.109396 -0.004523 0 0 -0 0</pose>
     <link name='Wall_100'>
       <collision name='Wall_100_Collision'>
