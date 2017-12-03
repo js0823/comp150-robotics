@@ -1,5 +1,5 @@
-float32 coord_x
-float32 coord_y
-float32 coord_z
+string coord_x
+string coord_y
+string coord_z
 ---
-float32[] coord_xyz
+string coord_xyz
