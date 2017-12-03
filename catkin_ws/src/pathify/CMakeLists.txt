@@ -67,6 +67,7 @@ add_message_files(
 add_service_files(
    FILES
    AddTwoInts.srv
+   ReturnCoordinate.srv
 )
 
 ## Generate actions in the 'action' folder

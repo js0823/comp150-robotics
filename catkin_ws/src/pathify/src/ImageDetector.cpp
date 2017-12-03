@@ -4,6 +4,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <pathify/ReturnCoordinate.h>
 
 static const std::string OPENCV_WINDOW = "Turtlebot Live";
 
@@ -17,6 +18,7 @@ class ImageDetector {
     image_transport::Subscriber image_sub_;
     image_transport::Subscriber image_sub_depth_;
     image_transport::Publisher image_pub_;
+    ros::ServiceServer service_;
 
   public:
     ImageDetector() 
@@ -28,6 +30,7 @@ class ImageDetector {
         image_sub_depth_ = it_.subscribe("/camera/depth/image_raw", 1000, 
             &ImageDetector::DepthDetectionCallBack, this);
         image_pub_ = it_.advertise("/image_detector/output_video", 1);
+        //service_ = nh_.advertiseService("coordinate", ReturnCoordinate);
 
         cv::namedWindow(OPENCV_WINDOW);
     }
@@ -35,6 +38,13 @@ class ImageDetector {
     ~ImageDetector() {
         cv::destroyWindow(OPENCV_WINDOW);
     }
+
+    // bool ReturnCoordinate(pathify::ReturnCoordinate::Request &req, pathify::ReturnCoordinate::Response &res) {
+    //     res.coord_xyz = req.coord_x + req.coord_y + req.coord_z;
+    //     ROS_INFO("request: x=%ld, y=%ld, z=%ld", (long int)req.coord_x, (long int)req.coord_y, (long int)req.coord_z);
+    //     ROS_INFO("sending back response: [%ld]", (long int)res.coord_xyz);
+    //     return true;
+    // }
 
     void ColorDetectionCallBack(const sensor_msgs::ImageConstPtr &msg) {
         cv_bridge::CvImagePtr cv_ptr;
