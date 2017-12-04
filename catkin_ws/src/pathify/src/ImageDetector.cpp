@@ -1,16 +1,19 @@
 #include <ros/ros.h>
+#include "std_msgs/String.h"
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <pathify/ReturnCoordinate.h>
+#include <sstream>
 
 static const std::string OPENCV_WINDOW = "Turtlebot Live";
 
 // Detect all colors except walls.
 int Lower_H = 0, Lower_S = 1, Lower_V = 1;
 int Upper_H = 255, Upper_S = 255, Upper_V = 255;
+bool colorDetected = false;
 
 class ImageDetector {
     ros::NodeHandle nh_;
@@ -18,7 +21,7 @@ class ImageDetector {
     image_transport::Subscriber image_sub_;
     image_transport::Subscriber image_sub_depth_;
     image_transport::Publisher image_pub_;
-    //ros::ServiceServer service_;
+    ros::Publisher imageDetector_pub;
 
   public:
     ImageDetector() 
@@ -33,8 +36,8 @@ class ImageDetector {
         image_sub_depth_ = it_.subscribe("/camera/depth/image_raw", 1000, 
             &ImageDetector::DepthDetectionCallBack, this);
 
-        // For returning coordinate to msg through srv
-        //service_ = nh_.advertiseService("coordinate", ReturnCoordinate);
+        // Output different messages for all to see.
+        imageDetector_pub = nh_.advertise<std_msgs::String>("imageDetector_output", 1000);
 
         cv::namedWindow(OPENCV_WINDOW);
     }
@@ -85,7 +88,42 @@ class ImageDetector {
             cv::drawContours(cv_ptr->image, contours, i, 
                 cv::Scalar(0,0,0), 2, 8, hierarchy, 0, cv::Point());
         }
-        
+
+        if (!img_mask.empty()) {
+            for (unsigned int i = 0;  i < contours.size();  i++) {
+                if (cv::contourArea(contours[i]) > 120000) {
+                    //std::cout << "Area = " << cv::contourArea(contours[i]) << std::endl;
+                    colorDetected = true;
+                }
+                else {
+                    colorDetected = false;
+                }
+            }
+        }
+
+        if (colorDetected == true) {
+            std_msgs::String msg;
+            std::stringstream ss;
+            ss << "Stop";
+            msg.data = ss.str();
+            std::cout << ss.str() << std::endl;
+
+            ROS_INFO("%s", msg.data.c_str());
+            imageDetector_pub.publish(msg);
+            ss.clear();
+        }
+        else {
+            std_msgs::String msg;
+            std::stringstream ss;
+            ss << "KeepGoing";
+            msg.data = ss.str();
+            std::cout << ss.str() << std::endl;
+
+            ROS_INFO("%s", msg.data.c_str());
+            imageDetector_pub.publish(msg);
+            ss.clear();
+        }
+
         // Update GUI Window
         cv::imshow(OPENCV_WINDOW, cv_ptr->image);
         //cv::imshow(OPENCV_WINDOW, img_mask);
