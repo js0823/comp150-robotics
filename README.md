@@ -76,6 +76,7 @@ note : When doing ROS full install, gazebo 7.0 is automatically installed. There
 - Red wall RGB = 203~204, 105, 105
 - Blue wall RGB = 
 - Yellow wall RGB = 
+- Check difference between pathify.rviz and /opt/ros/kinetic/share/turtlebot_rviz_launchers/rviz/robot.rviz
 
 ## Issuing commands to turtlebot
 - By issuing command either by command line or speech recognition, turtlebot will need to do everything above.
