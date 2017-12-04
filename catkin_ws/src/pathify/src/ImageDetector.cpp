@@ -48,8 +48,8 @@ class ImageDetector {
         
         // If no colors are found, return 0.0,0.0,0.0,
         res.coord_xyz = req.coord_x + "," + req.coord_y + "," + req.coord_z + ",";
-        ROS_INFO("request: x=%s, y=%s, z=%s", req.coord_x, req.coord_y, req.coord_z);
-        ROS_INFO("sending back response [%s]", res.coord_xyz);
+        ROS_INFO("request: x=%s, y=%s, z=%s", req.coord_x.c_str(), req.coord_y.c_str(), req.coord_z.c_str());
+        ROS_INFO("sending back response [%s]", res.coord_xyz.c_str());
         
         return true;
     }

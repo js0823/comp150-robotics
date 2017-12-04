@@ -196,7 +196,7 @@ void go_mode(std::string item_name)
    if (client.call(srv))
     {
         /*recieve co-ordinate from robot*/
-        ROS_INFO("result: %s", srv.response.coord_xyz);
+        ROS_INFO("result: %s", srv.response.coord_xyz.c_str());
         std::string result = srv.response.coord_xyz;
         std::vector<std::string> tmp_result = parse_output_from_ros(result);
         Coordinate x_y_z;
