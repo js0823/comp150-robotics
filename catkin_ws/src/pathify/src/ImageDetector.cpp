@@ -19,7 +19,7 @@ class ImageDetector {
     ros::NodeHandle nh_;
     image_transport::ImageTransport it_;
     image_transport::Subscriber image_sub_;
-    image_transport::Subscriber image_sub_depth_;
+    //image_transport::Subscriber image_sub_depth_;
     image_transport::Publisher image_pub_;
     ros::Publisher imageDetector_pub;
 
@@ -31,10 +31,6 @@ class ImageDetector {
         image_sub_ = it_.subscribe("/camera/rgb/image_raw", 1, 
             &ImageDetector::ColorDetectionCallBack, this);
         image_pub_ = it_.advertise("/image_detector/output_video", 1);
-
-        // Image depth calculation
-        image_sub_depth_ = it_.subscribe("/camera/depth/image_raw", 1000, 
-            &ImageDetector::DepthDetectionCallBack, this);
 
         // Output different messages for all to see.
         imageDetector_pub = nh_.advertise<std_msgs::String>("imageDetector_output", 1000);
@@ -131,21 +127,6 @@ class ImageDetector {
 
         // Output modified video stream
         image_pub_.publish(cv_ptr->toImageMsg());
-    }
-
-    void DepthDetectionCallBack(const sensor_msgs::ImageConstPtr& msg) {
-        //std::cout << "Top-left corner: " << *reinterpret_cast<const float*>
-        //    (&msg->data[0]) << "m" << std::endl;
-        
-        cv_bridge::CvImageConstPtr cv_ptr;
-
-        try {
-            cv_ptr = cv_bridge::toCvShare(msg);
-        }
-        catch (cv_bridge::Exception &e) {
-            ROS_ERROR("cv_bridge exception: %s", e.what());
-            return;
-        }
     }
 };
 
