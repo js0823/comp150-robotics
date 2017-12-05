@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include "pathify/ReturnCoordinate.h"
 #include <cstdlib>
+#include "std_msgs/String.h"
 
 struct Coordinate
 {
@@ -48,7 +49,7 @@ std::vector<std::string> parse_output_from_ros(std::string str);
 std::string parse_Item_To_string(Item item);
 
 void go_mode(std::string item_name);
-void find_mode(std::string item_name);
+void find_mode(std::string item_name, ros::NodeHandle n);
 void update_rom(const std::string& file_name, const std::string& content);
 void update_ram(const std::string& filen_name);
 void add_item_to_file(std::string item);
@@ -94,7 +95,7 @@ int main(int argc, char **argv)
                     in = parse_input(responds);
                     if(change_to_lowercase(in[0]) == "y")
                     {
-                        find_mode(input_vector[2]);
+                        find_mode(input_vector[2], n);
                     }
                     else{
                         continue;
@@ -118,7 +119,7 @@ int main(int argc, char **argv)
             {
                 if(!found_before(change_to_lowercase(input_vector[1]))) 
                 {
-                    find_mode(input_vector[1]);
+                    find_mode(input_vector[1], n);
                 }
                 else
                 {
@@ -199,7 +200,7 @@ void go_mode(std::string item_name)
 }
 
 
-void find_mode(std::string item_name)
+void find_mode(std::string item_name, ros::NodeHandle n)
 {
     /*look for and add to memory*/
     Item tmp;
@@ -230,7 +231,7 @@ void find_mode(std::string item_name)
                 {
                     std_msgs::String msg;
                     std::stringstream ss;
-                    ss << "keep_going" << count;
+                    ss << "keep_going";
                     msg.data = ss.str();
                     chatter_pub.publish(msg);
                 }
