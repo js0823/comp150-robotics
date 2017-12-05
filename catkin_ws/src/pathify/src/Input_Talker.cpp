@@ -10,11 +10,11 @@
 #include <cstdlib>
 
 struct Coordinate
-    {
-        float x;
-        float y;
-        float z;
-    };
+{
+    float x;
+    float y;
+    float z;
+};
 
 struct Item
 {
@@ -26,12 +26,15 @@ struct Item
 std::vector<Item> Robot_RAM;
 
 /*output string format:
-Maze Name;Item Name;Item x-location;Item y-location;Item z-location */
+ *Maze Name;Item Name;Item x-location;Item y-location;Item z-location */
 std::string Item_Information;
+std::string message_from_openCV;
 
 /*provided by the current maze name*/
 std::string maze_name;
 ros::ServiceClient client;
+ros::Subscriber sub;
+ros::Publisher chatter_pub;
 
 bool found_before(std::string item_name);
 bool is_empty(std::ifstream& pFile);
@@ -49,6 +52,8 @@ void find_mode(std::string item_name);
 void update_rom(const std::string& file_name, const std::string& content);
 void update_ram(const std::string& filen_name);
 void add_item_to_file(std::string item);
+void chatterCallback(const std_msgs::String::ConstPtr &msg);
+
 
 int main(int argc, char **argv)
 {
@@ -59,7 +64,9 @@ int main(int argc, char **argv)
     
     ros::init(argc, argv, "Input_Talker");
     ros::NodeHandle n;
-    client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
+    chatter_pub = n.advertise<std_msgs::String>("user_responds", 1000);
+    //client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
+    
     
     
     
@@ -139,7 +146,7 @@ int main(int argc, char **argv)
         else if(size == 1)
         {
             if(change_to_lowercase(input_vector[0]) == "end" || change_to_lowercase(input_vector[0]) == "terminate"|| \
-                    change_to_lowercase(input_vector[0]) == "stop"  || change_to_lowercase(input_vector[0]) == "quit")
+                change_to_lowercase(input_vector[0]) == "stop"  || change_to_lowercase(input_vector[0]) == "quit")
             {
                 break; /*terminate program*/
             }
@@ -161,6 +168,14 @@ int main(int argc, char **argv)
     return 0;
 }
 
+void chatterCallback(const std_msgs::String::ConstPtr &msg)
+{   
+    std::string s(msg->data.c_str());
+    message_from_openCV  = s;
+    //ROS_INFO("I heard: [%s]", msg->data.c_str());
+}
+
+
 /* goes to the area name give*/
 void go_mode(std::string item_name)
 {
@@ -172,47 +187,79 @@ void go_mode(std::string item_name)
             x_y_z.x = Robot_RAM[i].location.x;     
             x_y_z.y = Robot_RAM[i].location.y;                                                 
             x_y_z.z = Robot_RAM[i].location.z;  
-           
+            
             /* TODO: send xyz timi*/
             std::cout<<"Going to "<<" "<< item_name+"..."<<"\n";
             std::cout<<"Goon to "<<" "<< item_name+"!"<<"\n";
             return;
             
         }
-      }
+    }
     
- }
+}
 
 
- void find_mode(std::string item_name)
+void find_mode(std::string item_name)
 {
     /*look for and add to memory*/
     Item tmp;
     bool found = false;
     tmp.maze_name = maze_name;
     tmp.item_name = change_to_lowercase(item_name);
-    pathify::ReturnCoordinate srv;
+    //pathify::ReturnCoordinate srv;
     
-   if (client.call(srv))
+    while(!found)
     {
-        /*recieve co-ordinate from robot*/
-        ROS_INFO("result: %s", srv.response.coord_xyz);
-        std::string result = srv.response.coord_xyz;
-        std::vector<std::string> tmp_result = parse_output_from_ros(result);
-        Coordinate x_y_z;
-        float size  = string_to_float(tmp_result[0]) + string_to_float(tmp_result[1]) + string_to_float(tmp_result[2]);
-        if(size!= 0.0)
-        {
-            x_y_z.x =  string_to_float(tmp_result[0]);                           
-            x_y_z.y =  string_to_float(tmp_result[1]);                          
-            x_y_z.z =  string_to_float(tmp_result[2]);                          
-            tmp.location = x_y_z;
-            Robot_RAM.push_back(tmp);
-            std::string tmp_string = parse_Item_To_string(tmp);
-            update_rom("Robot_ROM.txt", tmp_string);
-            std::cout<<"Found"<<" "<< item_name<<"\n";
+        sub = n.subscribe("imageDetector_output", 1000, chatterCallback);
+        if(message_from_openCV == "stop"){
+            std::cout<<" Is this the location?"<<"\n"; 
+            std::cout<<"y/n: ";
+            std::string responds;
+            getline(std::cin, responds);
+            std::vector<std::string> in;
+            in = parse_input(responds);
+            if(change_to_lowercase(in[0]) == "y")
+            {
+                /*TODO: get co-ordinated from timi*/ 
+                found = true;
+                
+            }
+            else if(change_to_lowercase(in[0]) == "n")
+            {
+                for(int i = 0; i< 4; i++)
+                {
+                    std_msgs::String msg;
+                    std::stringstream ss;
+                    ss << "keep_going" << count;
+                    msg.data = ss.str();
+                    chatter_pub.publish(msg);
+                }
+                
+            }
         }
+        
     }
+    
+    /* if (client.call(srv))
+     *    {
+     *        /*recieve co-ordinate from robot*
+     *        ROS_INFO("result: %s", srv.response.coord_xyz);
+     *        std::string result = srv.response.coord_xyz;
+     *        std::vector<std::string> tmp_result = parse_output_from_ros(result);
+     *        Coordinate x_y_z;
+     *        float size  = string_to_float(tmp_result[0]) + string_to_float(tmp_result[1]) + string_to_float(tmp_result[2]);
+     *        if(size!= 0.0)
+     *        {
+     *            x_y_z.x =  string_to_float(tmp_result[0]);                           
+     *            x_y_z.y =  string_to_float(tmp_result[1]);                          
+     *            x_y_z.z =  string_to_float(tmp_result[2]);                          
+     *            tmp.location = x_y_z;
+     *            Robot_RAM.push_back(tmp);
+     *            std::string tmp_string = parse_Item_To_string(tmp);
+     *            update_rom("Robot_ROM.txt", tmp_string);
+     *            std::cout<<"Found"<<" "<< item_name<<"\n";
+}
+}*/
 }
 
 
@@ -243,18 +290,20 @@ void update_ram(const std::string& file_name)
             {
                 Item tmp = parse_string_To_Item(line);
                 Robot_RAM.push_back(tmp);
-                }
-        
+            }
+            
         }
         myfile.close();
     }
     
 }
 
+
 bool is_empty(std::ifstream& pFile)
 {
     return pFile.peek() == std::ifstream::traits_type::eof();
 }
+
 
 std::string parse_Item_To_string(Item item)
 {
@@ -328,6 +377,7 @@ Item parse_string_To_Item(std::string item_stringform)
     return tmp;
 }
 
+
 bool found_before(std::string item_name)
 { 
     int size = (int) Robot_RAM.size();
@@ -340,6 +390,7 @@ bool found_before(std::string item_name)
     return false;
 }
 
+
 std::string change_to_lowercase(std::string str)
 {
     int size = str.length();
@@ -350,12 +401,14 @@ std::string change_to_lowercase(std::string str)
     return a;
 }
 
+
 float string_to_float(std::string str)
 {
     std::string::size_type sz;     // alias of size_t
     float flt= std::stof (str,&sz);
     return flt;
 }
+
 
 std::string float_to_string(float flt)
 {
