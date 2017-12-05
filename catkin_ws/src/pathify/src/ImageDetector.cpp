@@ -22,6 +22,7 @@ class ImageDetector {
     //image_transport::Subscriber image_sub_depth_;
     image_transport::Publisher image_pub_;
     ros::Publisher imageDetector_pub;
+    ros::Subscriber Input_Talker_sub;
 
   public:
     ImageDetector() 
@@ -35,11 +36,17 @@ class ImageDetector {
         // Output different messages for all to see.
         imageDetector_pub = nh_.advertise<std_msgs::String>("imageDetector_output", 1000);
 
+        //Input_Talker_sub = nh_.subscribe("chatter", 1000, chatterCallback);
+
         cv::namedWindow(OPENCV_WINDOW);
     }
 
     ~ImageDetector() {
         cv::destroyWindow(OPENCV_WINDOW);
+    }
+
+    void chatterCallback(const std_msgs::String::ConstPtr &msg) {
+        ROS_INFO("I heard: [%s]", msg->data.c_str());
     }
 
     bool ReturnCoordinate(pathify::ReturnCoordinate::Request &req, 
