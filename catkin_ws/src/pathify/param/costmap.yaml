@@ -8,6 +8,7 @@ publish_voxel_map: true
 
 #set to true if you want to initialize the costmap from a static map
 static_map: false
+#static_map: true
 
 #begin - COMMENT these lines if you set static_map to true
 rolling_window: true

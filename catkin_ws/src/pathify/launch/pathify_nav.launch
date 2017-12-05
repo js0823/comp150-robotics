@@ -6,9 +6,9 @@
 	<param name="/laser_frame" value="base_footprint" />
 
 	<!-- Start Stage simulator with a given environment -->
-	<!-- <node name="Stage" pkg="stage_ros" type="stageros" args="$(find pathify)/world/nav2d_world/tutorial.world">
+	<node name="Stage" pkg="stage_ros" type="stageros" args="$(find pathify)/world/nav2d_world/tutorial.world">
 		<param name="base_watchdog_timeout" value="0" />
-	</node> -->
+	</node>
 
 	<!-- Start the Operator to control the simulated robot -->
 	<node name="Operator" pkg="nav2d_operator" type="operator" >
