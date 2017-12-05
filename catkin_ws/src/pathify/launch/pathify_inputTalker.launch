@@ -1,0 +1,3 @@
+<launch>
+<node name="Input_Talker" type="Input_Talker" pkg="pathify" output="screen" args="any" />
+</launch>
