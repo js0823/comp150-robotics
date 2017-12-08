@@ -13,7 +13,10 @@ static const std::string OPENCV_WINDOW = "Turtlebot Live";
 // Detect all colors except walls.
 int Lower_H = 0, Lower_S = 1, Lower_V = 1;
 int Upper_H = 255, Upper_S = 255, Upper_V = 255;
+
+// Boolean values
 bool colorDetected = false;
+bool colorClose = false;
 
 class ImageDetector {
     ros::NodeHandle nh_;
@@ -97,14 +100,20 @@ class ImageDetector {
                 if (cv::contourArea(contours[i]) > 120000) {
                     //std::cout << "Area = " << cv::contourArea(contours[i]) << std::endl;
                     colorDetected = true;
+                    colorClose = true;
                 }
                 else {
-                    colorDetected = false;
+                    colorDetected = true;
+                    colorClose = false;
                 }
             }
         }
+        else {
+            colorDetected = false;
+            colorClose = false;
+        }
 
-        if (colorDetected == true) {
+        if (colorDetected == true && colorClose == true) {
             std_msgs::String msg;
             std::stringstream ss;
             ss << "Stop";
@@ -115,10 +124,21 @@ class ImageDetector {
             imageDetector_pub.publish(msg);
             ss.clear();
         }
+        else if (colorDetected == true && colorClose == false) {
+            std_msgs::String msg;
+            std::stringstream ss;
+            ss << "FoundButGetCloser";
+            msg.data = ss.str();
+            std::cout << ss.str() << std::endl;
+
+            ROS_INFO("%s", msg.data.c_str());
+            imageDetector_pub.publish(msg);
+            ss.clear();
+        }
         else {
             std_msgs::String msg;
             std::stringstream ss;
-            ss << "KeepGoing";
+            ss << "NothingFound";
             msg.data = ss.str();
             std::cout << ss.str() << std::endl;
 
