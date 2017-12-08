@@ -136,7 +136,7 @@ int main(int argc, char **argv)
             }
             else
             {
-                std::cout<<"I don't know that command! Maybe start with find or go."<<"\n";  
+                std::cout<<"I don't know that command! Maybe start with find."<<"\n";  
             }
         }
         
@@ -204,8 +204,6 @@ void find_mode(std::string item_name, ros::NodeHandle n)
     tmp.maze_name = maze_name;
     tmp.item_name = change_to_lowercase(item_name);
     //pathify::ReturnCoordinate srv;
-    ros::ServiceClient startMapping = n.serviceClient<pathify>("/StartMapping");
-    startMapping.call()
     
     while(!found)
     {
