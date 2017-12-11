@@ -47,21 +47,6 @@ class ImageDetector {
         cv::destroyWindow(OPENCV_WINDOW);
     }
 
-    void chatterCallback(const std_msgs::String::ConstPtr &msg) {
-        ROS_INFO("I heard: [%s]", msg->data.c_str());
-    }
-
-    bool ReturnCoordinate(pathify::ReturnCoordinate::Request &req, 
-            pathify::ReturnCoordinate::Response &res) {
-        
-        // If no colors are found, return 0.0,0.0,0.0,
-        res.coord_xyz = req.coord_x + "," + req.coord_y + "," + req.coord_z + ",";
-        ROS_INFO("request: x=%s, y=%s, z=%s", req.coord_x.c_str(), req.coord_y.c_str(), req.coord_z.c_str());
-        ROS_INFO("sending back response [%s]", res.coord_xyz.c_str());
-        
-        return true;
-    }
-
     void ColorDetectionCallBack(const sensor_msgs::ImageConstPtr &msg) {
         cv_bridge::CvImagePtr cv_ptr;
 
