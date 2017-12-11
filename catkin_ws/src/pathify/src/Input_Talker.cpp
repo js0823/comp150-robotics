@@ -9,10 +9,6 @@
 #include <cstdlib>
 #include "std_msgs/String.h"
 #include <unistd.h>
-#include "gazebo_msgs/SetModelState.h"
-#include "gazebo_msgs/GetModelState.h"
-#include "gazebo_msgs/ModelStates.h"
-#include "gazebo_msgs/GetPhysicsProperties.h"
 #include <actionlib/client/simple_action_client.h>
 #include <nav2d_navigator/MoveToPosition2DAction.h>
 #include <tf/transform_datatypes.h>
@@ -22,7 +18,7 @@ struct Coordinate
 {
     float x;
     float y;
-} botCoordinate;
+} homeCoordinate, targetCoordinate  ;
 
 struct Item
 {
@@ -42,6 +38,7 @@ std::string message_from_openCV;
 std::string maze_name;
 ros::ServiceClient client;
 ros::Subscriber sub;
+ros::Subscriber position_sub;
 ros::Publisher chatter_pub;
 
 bool found_before(std::string item_name);
@@ -79,34 +76,6 @@ int main(int argc, char **argv)
     std::cout << "Attempting to localize...Please wait." << std::endl;
     sleep(20);
     std::cout << "Finished localizing." << std::endl;
-
-    //ros::ServiceClient gmscl = n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_states");
-    //gazebo_msgs::GetModelState modelState;
-    //modelState.request.model_name = "mobile_base";
-    //modelState.request.relative_entity_name = "world";
-    //gmscl.call(modelState);
-
-    //geometry_msgs::Pose pose;
-    //botCoordinate.x = modelState.response.pose.position.x;
-    //botCoordinate.y = modelState.response.pose.position.y;
-    //botCoordinate.z = modelState.response.pose.position.z;
-
-    //tell the action client that we want to spin a thread by default
-    //MoveBaseClient ac("goal", true);
-
-    ////goal.target_pose.header.frame_id = "base_link";
-    //goal.target_pose.header.frame_id = "map";
-    //goal.target_pose.header.stamp = ros::Time::now();
-
-    //goal.target_pose.pose.position.x = 1.0;
-    //goal.target_pose.pose.position.y = 1.0;
-    //goal.target_pose.pose.position.z = 0.000;
-    //goal.target_pose.pose.orientation.w = 1.0;
-
-    //ROS_INFO("Sending goal");
-    //ac.sendGoal(goal);
-
-    //ac.waitForResult();
 
     while (!end)
     {
