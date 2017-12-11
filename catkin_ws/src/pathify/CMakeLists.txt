@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   genmsg
   gazebo_ros
   sensor_msgs
+  geometry_msgs
   cv_bridge
   image_transport
 )
@@ -82,6 +83,7 @@ generate_messages(
    DEPENDENCIES
    std_msgs
    sensor_msgs
+   geometry_msgs
    roscpp
 )
 

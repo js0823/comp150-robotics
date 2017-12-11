@@ -13,12 +13,14 @@
 #include <nav2d_navigator/MoveToPosition2DAction.h>
 #include <tf/transform_datatypes.h>
 #include <nav2d_navigator/commands.h>
+#include <geometry_msgs/Pose.h>
 
 struct Coordinate
 {
     float x;
     float y;
-} homeCoordinate, targetCoordinate  ;
+    float z;
+} currentCoordinate, homeCoordinate, targetCoordinate;
 
 struct Item
 {
@@ -33,6 +35,7 @@ std::vector<Item> Robot_RAM;
  *Maze Name;Item Name;Item x-location;Item y-location;Item z-location */
 std::string Item_Information;
 std::string message_from_openCV;
+geometry_msgs::Pose savedPose;
 
 /*provided by the current maze name*/
 std::string maze_name;
@@ -58,6 +61,7 @@ void update_rom(const std::string &file_name, const std::string &content);
 void update_ram(const std::string &filen_name);
 void add_item_to_file(std::string item);
 void chatterCallback(const std_msgs::String::ConstPtr &msg);
+//void positionCallback(const geometry_msgs::Pose &pose);
 
 typedef actionlib::SimpleActionClient<nav2d_navigator::MoveToPosition2DAction> MoveClient;
 
@@ -71,6 +75,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "Input_Talker");
     ros::NodeHandle n;
     chatter_pub = n.advertise<std_msgs::String>("user_responds", 1000);
+    //position_sub = n.subscribe<geometry_msgs::Pose>("/robot_pose", 1, positionCallback);
     //client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
     std::system("rosservice call /StartMapping");
     std::cout << "Attempting to localize...Please wait." << std::endl;
@@ -198,6 +203,12 @@ void chatterCallback(const std_msgs::String::ConstPtr &msg)
     //ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
+// void positionCallback(const geometry_msgs::Pose &pose) {
+//     currentCoordinate.x = pose.position.x;
+//     currentCoordinate.y = pose.position.y;
+//     currentCoordinate.z = 0.0;
+// }
+
 /* goes to the area name give*/
 void go_mode(std::string item_name)
 {
@@ -219,8 +230,8 @@ void go_mode(std::string item_name)
 	        goal.target_pose.x = x_y_z.x;
 	        goal.target_pose.y = x_y_z.y;
 	        //goal.target_pose.theta = tf::getYaw(msg->pose.orientation);
-	        goal.target_distance = 0.25;
-	        goal.target_angle = 0.1;
+	        //goal.target_distance = 0.25;
+	        //goal.target_angle = 0.1;
 	
             ac.sendGoal(goal);
             ac.waitForResult();
