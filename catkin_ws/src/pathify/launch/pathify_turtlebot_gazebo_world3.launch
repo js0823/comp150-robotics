@@ -20,6 +20,7 @@
     <arg name="stacks" value="$(arg stacks)"/>
     <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
     <arg name="initial_pose" value="-x 0 -y 0 -z 0"/>
+    <!-- <arg name="initial_pose" value="-x 1.145196 -y -5.832194 -z -0.000247 -roll 0.000763 -pitch -0.014436 -yaw 1.619074"/> -->
   </include>
   
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">

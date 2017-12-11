@@ -9,6 +9,7 @@
 #include "pathify/ReturnCoordinate.h"
 #include <cstdlib>
 #include "std_msgs/String.h"
+#include <unistd.h>
 
 struct Coordinate
 {
@@ -67,11 +68,18 @@ int main(int argc, char **argv)
     ros::NodeHandle n;
     chatter_pub = n.advertise<std_msgs::String>("user_responds", 1000);
     //client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
+    std::system("rosservice call /StartMapping");
+    std::cout << "Attempting to localize...Please wait." << std::endl;
+    sleep(80);
     
     while(!end)
     {
         std::string input;
         std::cout<<"What do you want me to do?"<<"\n";
+        std::cout<<"Commands are [go, find, quit]"<<"\n";
+        std::cout<<"Ex. Go to red ----> Will go to red if the red location is saved in the database."<<"\n";
+        std::cout<<"Ex. Find red ----> Will start exploring the map."<<"\n";
+        std::cout<<"Ex. quit, end, stop, terminate ----> Exit this program."<<"\n";
         getline(std::cin, input);
         std::vector<std::string> input_vector;
         input_vector = parse_input(input);
@@ -83,7 +91,7 @@ int main(int argc, char **argv)
             {
                 if(!found_before(change_to_lowercase(input_vector[2])))
                 {
-                    std::cout<<" location not know. Should I find?"<<"\n";
+                    std::cout<<"Location not known. Should I find?"<<"\n";
                     std::cout<<"y/n: ";
                     std::string responds;
                     getline(std::cin, responds);
@@ -207,10 +215,11 @@ void find_mode(std::string item_name, ros::NodeHandle n)
     
     while(!found)
     {
+        std::system("rosservice call /StartExploration");
         sub = n.subscribe("imageDetector_output", 1000, chatterCallback);
         if(message_from_openCV == "stop"){
-            std::cout<<" Is this the location?"<<"\n"; 
-            std::cout<<"y/n: ";
+            std::system("rosservice call /Stop");
+            std::cout<<" Is this the location? (y/n)"<<"\n"; 
             std::string responds;
             getline(std::cin, responds);
             std::vector<std::string> in;
