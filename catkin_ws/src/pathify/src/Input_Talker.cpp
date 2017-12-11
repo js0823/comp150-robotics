@@ -6,7 +6,6 @@
 #include <fstream>
 #include <string.h>
 #include <ctype.h>
-#include "pathify/ReturnCoordinate.h"
 #include <cstdlib>
 #include "std_msgs/String.h"
 #include <unistd.h>
@@ -277,10 +276,10 @@ void find_mode(std::string item_name, ros::NodeHandle n)
     tmp.maze_name = maze_name;
     tmp.item_name = change_to_lowercase(item_name);
     //pathify::ReturnCoordinate srv;
+    std::system("rosservice call /StartExploration");
 
     while (!found)
     {
-        std::system("rosservice call /StartExploration");
         sub = n.subscribe("imageDetector_output", 1000, chatterCallback);
         if (message_from_openCV == "Stop")
         {

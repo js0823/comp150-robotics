@@ -5,7 +5,6 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <pathify/ReturnCoordinate.h>
 #include <sstream>
 
 static const std::string OPENCV_WINDOW = "Turtlebot Live";
