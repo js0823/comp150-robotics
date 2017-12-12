@@ -106,7 +106,6 @@ int main(int argc, char **argv)
 
     while (!end)
     {
-        ros::spinOnce();
         std::string input;
 
         std::cout << "What do you want me to do?"
@@ -212,6 +211,7 @@ int main(int argc, char **argv)
                       << "\n";
         }
     }
+    ros::spin();
     std::cout << "Shutting Down ..."
               << "\n";
     std::cout << "Done! Have a great day!"
