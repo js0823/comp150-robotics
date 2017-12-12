@@ -11,7 +11,6 @@
 #include <unistd.h>
 #include <actionlib/client/simple_action_client.h>
 #include <nav2d_navigator/MoveToPosition2DAction.h>
-#include <tf/transform_datatypes.h>
 #include <nav2d_navigator/commands.h>
 #include <geometry_msgs/Pose.h>
 
@@ -35,7 +34,6 @@ std::vector<Item> Robot_RAM;
  *Maze Name;Item Name;Item x-location;Item y-location;Item z-location */
 std::string Item_Information;
 std::string message_from_openCV;
-geometry_msgs::Pose savedPose;
 
 /*provided by the current maze name*/
 std::string maze_name;
@@ -61,7 +59,7 @@ void update_rom(const std::string &file_name, const std::string &content);
 void update_ram(const std::string &filen_name);
 void add_item_to_file(std::string item);
 void chatterCallback(const std_msgs::String::ConstPtr &msg);
-//void positionCallback(const geometry_msgs::Pose &pose);
+void positionCallback(const geometry_msgs::Pose::ConstPtr &pose);
 
 typedef actionlib::SimpleActionClient<nav2d_navigator::MoveToPosition2DAction> MoveClient;
 
@@ -75,16 +73,42 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "Input_Talker");
     ros::NodeHandle n;
     chatter_pub = n.advertise<std_msgs::String>("user_responds", 1000);
-    //position_sub = n.subscribe<geometry_msgs::Pose>("/robot_pose", 1, positionCallback);
+    position_sub = n.subscribe<geometry_msgs::Pose>("/robot_pose", 1000, positionCallback);
     //client = n.serviceClient<pathify::ReturnCoordinate>("coordinate");
     std::system("rosservice call /StartMapping");
     std::cout << "Attempting to localize...Please wait." << std::endl;
-    sleep(20);
+    sleep(15);
     std::cout << "Finished localizing." << std::endl;
+    ros::spinOnce();
+    homeCoordinate.x = currentCoordinate.x;
+    homeCoordinate.y = currentCoordinate.y;
+    homeCoordinate.z = currentCoordinate.z;
+
+    // Get Name of the map
+    bool got_MapName = false;
+    while (!got_MapName) {
+        ros::spinOnce();
+        std::cout << "What is the name of the map?" << "\n";
+        std::string map_input;
+        getline(std::cin, map_input);
+        std::vector<std::string> vector_mapName;
+        vector_mapName = parse_input(map_input);
+        int size = vector_mapName.size();
+        if (size > 1) {
+            std::cout << "No blanks between mapname please." << std::endl;
+        }
+        else {
+            maze_name = vector_mapName[0];
+            std::cout << "Map name is : " + maze_name << std::endl;
+            got_MapName = true;
+        }
+    }
 
     while (!end)
     {
+        ros::spinOnce();
         std::string input;
+
         std::cout << "What do you want me to do?"
                   << "\n";
         std::cout << "Commands are [go, find, quit]"
@@ -203,11 +227,11 @@ void chatterCallback(const std_msgs::String::ConstPtr &msg)
     //ROS_INFO("I heard: [%s]", msg->data.c_str());
 }
 
-// void positionCallback(const geometry_msgs::Pose &pose) {
-//     currentCoordinate.x = pose.position.x;
-//     currentCoordinate.y = pose.position.y;
-//     currentCoordinate.z = 0.0;
-// }
+void positionCallback(const geometry_msgs::Pose::ConstPtr &pose) {
+    currentCoordinate.x = pose->position.x;
+    currentCoordinate.y = pose->position.y;
+    currentCoordinate.z = 0.0;
+}
 
 /* goes to the area name give*/
 void go_mode(std::string item_name)
