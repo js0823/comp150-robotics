@@ -124,12 +124,9 @@ int main(int argc, char **argv)
         input_vector = parse_input(input);
         int size = input_vector.size();
 
-        if (size == 3) /*e.g "Go to LocationAA" */
-        {
-            if (change_to_lowercase(input_vector[0]) == "go")
-            {
-                if (!found_before(change_to_lowercase(input_vector[2])))
-                {
+        if (size == 3) { /*e.g "Go to LocationAA" */
+            if (change_to_lowercase(input_vector[0]) == "go") {
+                if (!found_before(change_to_lowercase(input_vector[2]))) {
                     std::cout << "Location not known. Should I find?"
                               << "\n";
                     std::cout << "y/n: ";
@@ -137,33 +134,26 @@ int main(int argc, char **argv)
                     getline(std::cin, responds);
                     std::vector<std::string> in;
                     in = parse_input(responds);
-                    if (change_to_lowercase(in[0]) == "y")
-                    {
+                    if (change_to_lowercase(in[0]) == "y") {
                         find_mode(input_vector[2], n);
                     }
-                    else
-                    {
+                    else {
                         continue;
                     }
                 }
-                else
-                {
+                else {
                     go_mode(input_vector[2]);
                 }
             }
-            else
-            {
+            else {
                 std::cout << "I don't know that command! Maybe start with go."
                           << "\n";
             }
         }
 
-        else if (size == 2) /*e.g,  "find locationAA" */
-        {
-            if (change_to_lowercase(input_vector[0]) == "find")
-            {
-                if (!found_before(change_to_lowercase(input_vector[1])))
-                {
+        else if (size == 2) { /*e.g,  "find locationAA" */
+            if (change_to_lowercase(input_vector[0]) == "find") {
+                if (!found_before(change_to_lowercase(input_vector[1]))) {
                     find_mode(input_vector[1], n);
                 }
                 else
@@ -175,39 +165,32 @@ int main(int argc, char **argv)
                     getline(std::cin, responds);
                     std::vector<std::string> in;
                     in = parse_input(responds);
-                    if (change_to_lowercase(in[0]) == "y")
-                    {
+                    if (change_to_lowercase(in[0]) == "y") {
                         go_mode(input_vector[1]);
                     }
-                    else
-                    {
+                    else {
                         continue;
                     }
                 }
             }
-            else
-            {
+            else {
                 std::cout << "I don't know that command! Maybe start with find."
                           << "\n";
             }
         }
 
-        else if (size == 1)
-        {
+        else if (size == 1) {
             if (change_to_lowercase(input_vector[0]) == "end" || change_to_lowercase(input_vector[0]) == "terminate" ||
-                change_to_lowercase(input_vector[0]) == "stop" || change_to_lowercase(input_vector[0]) == "quit")
-            {
+                change_to_lowercase(input_vector[0]) == "stop" || change_to_lowercase(input_vector[0]) == "quit") {
                 break; /*terminate program*/
             }
-            else
-            {
+            else {
                 std::cout << "I don't know that command!"
                           << "\n";
             }
         }
 
-        else if (size <= 0 || size > 3)
-        {
+        else if (size <= 0 || size > 3) {
             std::cout << "Too many words! I understand up to three words per command!"
                       << "\n";
         }
@@ -221,8 +204,7 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void chatterCallback(const std_msgs::String::ConstPtr &msg)
-{
+void chatterCallback(const std_msgs::String::ConstPtr &msg) {
     std::string s(msg->data.c_str());
     message_from_openCV = s;
     //ROS_INFO("I heard: [%s]", msg->data.c_str());
@@ -235,11 +217,9 @@ void positionCallback(const geometry_msgs::Pose::ConstPtr &pose) {
 }
 
 /* goes to the area name give*/
-void go_mode(std::string item_name)
-{
+void go_mode(std::string item_name) {
     int size = (int)Robot_RAM.size();
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         if (Robot_RAM[i].item_name == item_name && Robot_RAM[i].maze_name == maze_name)
         {
             std::cout << "Going to " << " " << item_name + "..." << "\n";
@@ -283,8 +263,7 @@ void find_mode(std::string item_name, ros::NodeHandle n) {
         sub = n.subscribe("imageDetector_output", 1000, chatterCallback);
         if (message_from_openCV == "Stop") {
             std::system("rosservice call /Stop");
-            std::cout << " Is this the location? (y/n)"
-                      << "\n";
+            std::cout << " Is this the location? (y/n)" << "\n";
             std::string responds;
             getline(std::cin, responds);
             std::vector<std::string> in;
@@ -364,15 +343,12 @@ std::vector<std::string> parse_helper(std::string str) {
     int size = str.length();
     std::string a;
     std::vector<std::string> output;
-    for (int i = 0; i < size; i++)
-    {
-        if (str[i] == ';' || str[i] == '.')
-        {
+    for (int i = 0; i < size; i++) {
+        if (str[i] == ';' || str[i] == '.') {
             output.push_back(a);
             a = "";
         }
-        else
-        {
+        else {
             a += str[i];
         }
     }
