@@ -73,6 +73,7 @@ int main(int argc, char **argv)
 
     bool end = false;
     update_ram("Robot_ROM.txt");
+
     maze_name = /*get from somewhere*/ "love";
 
     ros::init(argc, argv, "Input_Talker");
@@ -116,9 +117,18 @@ int main(int argc, char **argv)
 
         std::cout << "What do you want me to do?" << "\n";
         std::cout << "Commands are [go, find, quit]" << "\n";
-        std::cout << "Ex. Go to red ----> Will go to red if the red location is saved in the database." << "\n";
-        std::cout << "Ex. Find red ----> Will start exploring the map." << "\n";
-        std::cout << "Ex. quit, end, stop, terminate ----> Exit this program." << "\n";
+        std::cout << "######################################################################################"<< "\n";
+        std::cout << "###########################           USAGE           ################################"<< "\n";
+        std::cout << "######################################################################################"<< "\n";
+        std::count<< "##                                                                                  ##"<< "\n";
+        std::cout << "## Ex. Go to red ----> Will go to red if the red location is saved in the database. ##"<< "\n";
+        std::cout << "## Ex. Find red ----> Will start exploring the map.                                 ##"<< "\n";
+        std::cout << "## Ex. quit, end, stop, terminate ----> Exit this program.                          ##"<< "\n";
+        std::count<< "##                                                                                  ##"<< "\n";
+        std::cout << "######################################################################################"<< "\n";
+        std::cout << "######################################################################################"<< "\n";
+        std::cout << "######################################################################################"<< "\n";
+        std::cout <<"\n";
         getline(std::cin, input);
         std::vector<std::string> input_vector;
         input_vector = parse_input(input);
@@ -196,10 +206,17 @@ int main(int argc, char **argv)
         }
     }
     ros::spin();
-    std::cout << "Shutting Down ..."
-              << "\n";
-    std::cout << "Done! Have a great day!"
-              << "\n";
+    std::cout << "######################################################################################"<< "\n";
+    std::cout << "###########################          Goodbye!         ################################"<< "\n";
+    std::cout << "######################################################################################"<< "\n";
+    std::count<< "##                                                                                  ##"<< "\n";
+    std::cout << "## in-Memory update                                                       [100%]    ##"<< "\n";
+    std::cout << "## cache clearing                                                         [100%]    ##"<< "\n";
+    std::cout << "## system shutdown                                                        [100%]    ##"<< "\n";
+    std::count<< "##                                                                                  ##"<< "\n";
+    std::cout << "######################################################################################"<< "\n";
+    std::cout << "######################################################################################"<< "\n";
+    std::cout << "######################################################################################"<< "\n";
 
     return 0;
 }
@@ -239,7 +256,7 @@ void go_mode(std::string item_name) {
             ac.sendGoal(goal);
             ac.waitForResult();
             std::cout << "Found " << item_name << ". Now going back to home location." << std::endl;
-	        goal.target_pose.x = homeCoordinate.x;
+            goal.target_pose.x = homeCoordinate.x;
             goal.target_pose.y = homeCoordinate.y;
 	
             ac.sendGoal(goal);
@@ -255,7 +272,6 @@ void find_mode(std::string item_name, ros::NodeHandle n) {
     Item tmp;
     bool found = false;
     tmp.maze_name = maze_name;
-    tmp.item_name = change_to_lowercase(item_name);
     //pathify::ReturnCoordinate srv;
     std::system("rosservice call /StartExploration");
 
@@ -275,6 +291,7 @@ void find_mode(std::string item_name, ros::NodeHandle n) {
                 x_y_z.y = currentCoordinate.y;
                 x_y_z.z = currentCoordinate.z;
                 tmp.location = x_y_z;
+                tmp.item_name = change_to_lowercase(item_name);
                 Robot_RAM.push_back(tmp);
                 std::string tmp_string = parse_Item_To_string(tmp);
                 update_rom("Robot_ROM.txt", tmp_string);
@@ -294,6 +311,21 @@ void find_mode(std::string item_name, ros::NodeHandle n) {
                 found = true;
             }
             else if (change_to_lowercase(in[0]) == "n") {
+                /* ask for the name of place and continue to look for the requested place*/
+                std::cout << " So what's the name of this place?" << "\n";
+                std::string responds;
+                getline(std::cin, responds);
+                
+                Coordinate x_y_z;
+                x_y_z.x = currentCoordinate.x;
+                x_y_z.y = currentCoordinate.y;
+                x_y_z.z = currentCoordinate.z;
+                tmp.location = x_y_z;
+                tmp.item_name = change_to_lowercase(responds);
+                Robot_RAM.push_back(tmp);
+                std::string tmp_string = parse_Item_To_string(tmp);
+                update_rom("Robot_ROM.txt", tmp_string);
+                
                 std::cout << "Ok Let's keep exploring." << std::endl;
                 std::system("rosservice call /StartExploration");
             }
