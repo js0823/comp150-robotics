@@ -87,9 +87,9 @@ generate_messages(
    roscpp
 )
 
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
+#################################################
+##  Declare ROS dynamic reconfigure parameters ##
+#################################################
 
 ## To declare and build dynamic reconfigure parameters within this
 ## package, follow these steps:
