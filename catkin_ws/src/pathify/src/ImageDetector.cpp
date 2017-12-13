@@ -37,8 +37,7 @@ class ImageDetector {
         // Output different messages for all to see.
         imageDetector_pub = nh_.advertise<std_msgs::String>("imageDetector_output", 1000);
 
-        //Input_Talker_sub = nh_.subscribe("chatter", 1000, chatterCallback);
-
+        
         cv::namedWindow(OPENCV_WINDOW);
     }
 
@@ -77,15 +76,11 @@ class ImageDetector {
         findContours(img_mask, contours, hierarchy, 
             CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
         
-        for (int i = 0; i < contours.size(); i++) {
-            cv::drawContours(cv_ptr->image, contours, i, 
-                cv::Scalar(0,0,0), 2, 8, hierarchy, 0, cv::Point());
-        }
+        for (int i = 0; i < contours.size(); i++) m
 
         if (!img_mask.empty()) {
             for (unsigned int i = 0;  i < contours.size();  i++) {
                 if (cv::contourArea(contours[i]) >= 120000) {
-                    //std::cout << "Area = " << cv::contourArea(contours[i]) << std::endl;
                     colorDetected = true;
                     colorClose = true;
                 }
@@ -106,7 +101,7 @@ class ImageDetector {
                 std::stringstream ss;
                 ss << "Stop";
                 msg.data = ss.str();
-                //std::cout << ss.str() << std::endl;
+                
 
                 ROS_INFO("%s", msg.data.c_str());
                 imageDetector_pub.publish(msg);
@@ -120,7 +115,7 @@ class ImageDetector {
                 std::stringstream ss;
                 ss << "FoundButGetCloser";
                 msg.data = ss.str();
-                //std::cout << ss.str() << std::endl;
+                
 
                 ROS_INFO("%s", msg.data.c_str());
                 imageDetector_pub.publish(msg);
@@ -134,8 +129,6 @@ class ImageDetector {
                 std::stringstream ss;
                 ss << "NothingFound";
                 msg.data = ss.str();
-                //std::cout << ss.str() << std::endl;
-
                 ROS_INFO("%s", msg.data.c_str());
                 imageDetector_pub.publish(msg);
                 ss.clear();
@@ -145,7 +138,6 @@ class ImageDetector {
 
         // Update GUI Window
         cv::imshow(OPENCV_WINDOW, cv_ptr->image);
-        //cv::imshow(OPENCV_WINDOW, img_mask);
         cv::waitKey(5);
 
         // Output modified video stream
