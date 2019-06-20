@@ -1,5 +1,5 @@
 # Pathify
-COMP150 robotics project
+This project aims to use Gazebo in ROS to simulate SLAM navigation in an unknown environment using computer vision to distinguish object.
 
 # Prerequisite before Running the project(on Ubuntu)
 1. Follow http://wiki.ros.org/kinetic/Installation/Ubuntu. Do desktop full install.
